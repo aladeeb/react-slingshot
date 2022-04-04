@@ -40,7 +40,9 @@ workflows:
     jobs:
       - lint
       - test:
-          requires: lint
+          requires:
+            - lint
       - analyze: 
-          requires: test
+          requires:
+            - test
         
