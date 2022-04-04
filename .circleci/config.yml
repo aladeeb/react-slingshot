@@ -1,16 +1,45 @@
 version: 2.1
 
 jobs:
-  say-hello:
+  lint:
     docker:
-      - image: cimg/base:stable
+      - image: cicrleci/node:13.8.0
     steps:
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - run: npm i
+      - save_cache:
+          key: "dependecies"
+          path: /src/node_modules
+      - run: npm run lint
+
+  test:
+      docker:
+        - image: cicrleci/node:13.8.0
+      steps:
+        - checkout
+        - restore_cache: 
+            keys:
+              - "dependecies"
+        - run: npm i
+        - run: npm run test
+
+  analyze:
+      docker:
+        - image: cicrleci/node:13.8.0
+      steps:
+        - checkout
+        - restore_cache: 
+            keys:
+              - "dependecies"
+        - run: npm i
+        - run: npm audit
 
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - lint
+      - test:
+          requires: lint
+      - analyze: 
+          requires: test
+        
