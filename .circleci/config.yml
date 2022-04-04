@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   lint:
     docker:
-      - image: cicrleci/node:13.8.0
+      - image: cimg/node:17.8.0
     steps:
       - checkout
       - run: npm i
@@ -15,7 +15,7 @@ jobs:
 
   test:
       docker:
-        - image: cicrleci/node:13.8.0
+        - image: cimg/node:17.8.0
       steps:
         - checkout
         - restore_cache: 
@@ -26,7 +26,7 @@ jobs:
 
   analyze:
       docker:
-        - image: cicrleci/node:13.8.0
+        - image: cimg/node:17.8.0
       steps:
         - checkout
         - restore_cache: 
