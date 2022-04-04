@@ -9,7 +9,8 @@ jobs:
       - run: npm i
       - save_cache:
           key: "dependecies"
-          path: /src/node_modules
+          paths:
+            - /src/node_modules
       - run: npm run lint
 
   test:
